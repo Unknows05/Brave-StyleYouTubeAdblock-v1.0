@@ -1,15 +1,17 @@
 // ==UserScript==
 // @name         Brave-Style YouTube Adblock
-// @namespace    http://tampermonkey.net/
-// @version      1.2.1
+// @namespace    https://github.com/Unknows05/Brave-StyleYouTubeAdblock
+// @version      1.2.2
 // @description  Multi-layer adblock mimicking Brave Shields - FIXED AUTO-PLAY BUG
-// @author       Unknows05
+// @author       Based on Brave Shields & EasyList
 // @match        https://www.youtube.com/*
 // @match        https://m.youtube.com/*
 // @icon         https://brave.com/static-assets/images/brave-favicon.png
-// @updateURL    https://github.com/Unknows05/Brave-StyleYouTubeAdblock/youtube-adblock/raw/main/youtube-adblock.user.js
-// @downloadURL  https://github.com/Unknows05/Brave-StyleYouTubeAdblock/youtube-adblock/raw/main/youtube-adblock.user.js
 // @grant        none
+// @run-at       document-start
+// @noframes
+// @updateURL    https://raw.githubusercontent.com/Unknows05/Brave-StyleYouTubeAdblock/main/youtube-adblock.user.js
+// @downloadURL  https://raw.githubusercontent.com/Unknows05/Brave-StyleYouTubeAdblock/main/youtube-adblock.user.js
 // ==/UserScript==
 
 (function() {
@@ -35,8 +37,8 @@
         // Debug mode
         debug: false,
         
-        // Update check
-        autoUpdate: true
+        // Update check - DISABLED (requires GM_info)
+        autoUpdate: false
     };
 
     // ============================================================
@@ -495,7 +497,7 @@
     }
 
     function initialize() {
-        log('Initializing Brave-Style Adblock v1.2.1...', 'info');
+        log('Initializing Brave-Style Adblock v1.2.2...', 'info');
         
         // Setup user interaction tracking FIRST
         setupUserInteractionTracking();
@@ -522,34 +524,6 @@
     }
 
     // ============================================================
-    // AUTO-UPDATE CHECK
-    // ============================================================
-    
-    function checkForUpdate() {
-        if (!CONFIG.autoUpdate) return;
-        
-        // Note: Update URL should point to your actual repository
-        const SCRIPT_URL = 'https://raw.githubusercontent.com/YOUR_REPO/brave-youtube-adblock/main/script.user.js';
-        
-        fetch(SCRIPT_URL)
-            .then(response => response.text())
-            .then(data => {
-                const match = data.match(/@version\s+(\d+\.\d+\.\d+)/);
-                if (match) {
-                    const remoteVersion = match[1];
-                    const currentVersion = GM_info?.script?.version || '1.0.0';
-                    
-                    if (remoteVersion > currentVersion) {
-                        log(`New version available: ${remoteVersion} (Current: ${currentVersion})`, 'warn');
-                    }
-                }
-            })
-            .catch(err => {
-                if (CONFIG.debug) console.warn('Update check failed:', err);
-            });
-    }
-
-    // ============================================================
     // START SCRIPT
     // ============================================================
     
@@ -557,10 +531,6 @@
         document.addEventListener('DOMContentLoaded', initialize);
     } else {
         initialize();
-    }
-
-    if (CONFIG.autoUpdate) {
-        setTimeout(checkForUpdate, 5000);
     }
 
 })();
