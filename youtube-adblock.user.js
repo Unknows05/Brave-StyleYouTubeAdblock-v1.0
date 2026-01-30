@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Brave-Style YouTube Adblock
-// @namespace    http://tampermonkey.net/https://github.com/Unknows05/youtube-adblock/blob/main/youtube-adblock.user.js//
+// @namespace    http://tampermonkey.net/
 // @version      1.2.1
 // @description  Multi-layer adblock mimicking Brave Shields - FIXED AUTO-PLAY BUG
 // @author       Unknows05
